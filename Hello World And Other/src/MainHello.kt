@@ -28,7 +28,7 @@ fun main(){
     Creating a new "Person" object. Kotlin doesn't use a 'new' statement when creating new objects
 
     notice the 'val' statement in front of the object/variable name. In kotlin there is 'val' and 'var'
-    'val' = immutable (read only like 'final' in Java or 'const' in C++)
+    'val' = read only (like 'final' in Java or 'const' in C++). It is not technically immutable when used with classes
     'var' = mutable (changeable)
 
     Hence it is again, like reading english:
@@ -36,7 +36,7 @@ fun main(){
     - "The y 'variable' can manipulated and changed via algebra"
 
      */
-    val arkery = Person("arkery", 9000, "supreme overlord")//Check Person.kt file
+    val arkery = Person("arkery", 9000, "supreme overlord")//Check ObClass.kt file
 
     /*
     The person object is now created. Again there are no setters and getters for kotlin data classes
@@ -45,6 +45,38 @@ fun main(){
     Hence we access them like: objectName.specificPropertyOfObject
      */
     println("My name is: ${arkery.name} and I am the ${arkery.age}" )
+
+    /**
+     * This here is using the second person class object where constructor parameters are 'var' instead of 'val'
+     * Thus it allows the object values to be re-assigned after initializing it via the constructor parameters
+     */
+    val testPerson = DesignPerson("Cody", 12, "clone trooper")
+    testPerson.age = 13;
+    println("${testPerson.name} is ${testPerson.age} years old ${testPerson.occupation} in the Grand Army of the Republic\n")
+
+
+    //Example of the usage of the init block in a class - see ObClass.kt
+    val testPerson2 = Person2("Rex", 7, "clone trooper")
+    println("${testPerson2.name} is ${testPerson2.age} years old ${testPerson2.occupation} in the Grand Army of the Republic")
+    println("Rex's age should be 14\n")
+
+    //Example of usage of a secondary constructor in a class
+    val testPerson3 = Person3("Fives", 4, "clone trooper", "123456789", "Kamino Clone Academy Year 3")
+    println("${testPerson3.name}'s student ID is: ${testPerson3.studentID} and the student is in ${testPerson3.classYear}")
+
+    /**
+     * Printing Hello World from a class
+     */
+    val Hello = HelloWorld()
+    Hello.printHelloWorld()
+
+    /**
+     * Given the differences between val and var, Kotlin is also smart enough to prevent potential errors like this:
+     *
+     * var test2Person = Person("Mike", 100, "commoner")
+     * test2Person = 12;
+     */
+
 }
 
 /**
