@@ -81,7 +81,7 @@ class Person2(val name: String, var age: Int, var occupation: String){
 class Person3(val name: String, val age: Int, val occupation: String) {
 
     //Used by secondary constructor, it seems we have to initially initialize the strings since unlike java
-    //Null is a big no no
+    //Null is a big no no and strangely, this is public not private
     var studentID: String = ""
     var classYear: String = ""
 
@@ -108,7 +108,13 @@ class Person3(val name: String, val age: Int, val occupation: String) {
  * Of course constructors are not necessarily needed and this is also possible
  */
 class HelloWorld{
+
+    //Declared as private so that it can only be used inside of the class
+    //By default, everything is public but technically you can set this to public and just
+    //Call the variable but then it wouldn't really be OOP
+    private val hello: String = "Hello World from HelloWorld class"
+
     fun printHelloWorld(){
-        println("Hello World from HelloWorld class")
+        println(hello)
     }
 }

@@ -69,7 +69,6 @@ fun main(){
      */
     val Hello = HelloWorld()
     Hello.printHelloWorld()
-
     /**
      * Given the differences between val and var, Kotlin is also smart enough to prevent potential errors like this:
      *
