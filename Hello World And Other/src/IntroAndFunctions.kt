@@ -9,6 +9,7 @@ fun main(){
      * String printing still support new line \n carriage \r etc. Like in java
      */
     println("Mandatory 'Hello World' when learning a new language\n")
+    printHelloV()
 
     /*
     In java, printing out return values from methods, classes, data types etc. requires
@@ -18,10 +19,20 @@ fun main(){
     System.out.println("The sum of 2 and 3 is " + add(2, 3) + " ");
 
     Kotlin behaves somewhat similarly to python when doing this by surrounding the
-    data type with ${}
+    data type with ${} via string interpolation
 
      */
     println("The sum of 2 and 3 is ${add(2, 3)}") //Calling add, direct print
+    println("The sum of 420 and 69 is ${420 + 69}") //Doing addition inside
+
+    val printingTest = 42;
+    println("The answer to everything in the universe: $printingTest")
+
+    /*
+    However it still does support traditional java ways to print information
+     */
+
+    println("The sum of 5 and 6 is " + add(5,6)) //Calling add, direct print
 
 
     /*
@@ -36,7 +47,7 @@ fun main(){
     - "The y 'variable' can manipulated and changed via algebra"
 
      */
-    val arkery = Person("arkery", 9000, "supreme overlord")//Check ObClass.kt file
+    val arkery = Person("arkery", 9000, "supreme overlord")//Check Classes.kt file
 
     /*
     The person object is now created. Again there are no setters and getters for kotlin data classes
@@ -55,7 +66,7 @@ fun main(){
     println("${testPerson.name} is ${testPerson.age} years old ${testPerson.occupation} in the Grand Army of the Republic\n")
 
 
-    //Example of the usage of the init block in a class - see ObClass.kt
+    //Example of the usage of the init block in a class - see Classes.kt
     val testPerson2 = Person2("Rex", 7, "clone trooper")
     println("${testPerson2.name} is ${testPerson2.age} years old ${testPerson2.occupation} in the Grand Army of the Republic")
     println("Rex's age should be 14\n")
@@ -74,7 +85,39 @@ fun main(){
      *
      * var test2Person = Person("Mike", 100, "commoner")
      * test2Person = 12;
+     *
+     * Thus Kotlin sets the data type of a variable to what it was INITIALLY set to preventing things
+     * this from happening:
+     *
+     * var testingHello = "Hello" //INITIALLY a String
+     * testingHello = 2; //Cannot be re-assigned to an integer
      */
+
+    /**
+     * Of course you can still re-assign it but it still has to be a string
+     */
+    var testingHello = "Hello"
+    val testingNumber = 2
+    testingHello = testingNumber.toString()
+
+
+    //Also using is statement to check type
+    if(testingHello is String){
+        println("\n\nIt's a String")
+    }
+
+
+    /*
+    Example of calling a function that accepts a variable number of arguments
+     */
+    println("The sum of 1, 2 and 3 is: ${sum(1.0, 2.0, 3.0)}")
+    println("The sum of 1.7, 2.5, 2.9, 3.5 and 33.4 is: ${sum(1.7, 2.5, 2.9, 3.5,  33.4)}")
+
+    /*
+    You can also do function literals here:
+     */
+    val dividing = {x: Double, y: Double -> (x/y)}
+    println("10 divided by 2.5 is: ${dividing(10.0, 2.5)}")
 
 }
 
@@ -91,3 +134,27 @@ fun main(){
  * like reading english: The variable x that is an integer and the variable y that is an integer.
  */
 fun add(x: Int, y: Int) = x + y
+
+
+/**
+ * This would be the equivalent of:
+ *      public/private void printHelloV(){
+ *          System.out.println("Hello World!);
+ *      }
+ *
+ * Kotlin uses "Unit" as the return type to denote that the function won't return anything meaningful
+ */
+fun printHelloV() : Unit = println("Hello World from function printHelloV()!")
+
+
+/*
+Function with a variable amount of parameters/arguments:
+ */
+
+fun sum(vararg x: Double): Double{
+    var sum: Double = 0.0
+    for(i in x){
+        sum += i
+    }
+    return sum
+}

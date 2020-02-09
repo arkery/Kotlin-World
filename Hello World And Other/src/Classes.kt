@@ -1,4 +1,11 @@
 /**
+ * General
+ * - Kotlin does not have static methods
+ * - More info on classes: https://kotlinlang.org/docs/reference/classes.html
+ */
+
+
+/**
  * Kotlin is interesting when it comes to classes & the constructor set up since
  * the formatting is similar to a method/function for overloaded constructors
  *
@@ -60,6 +67,9 @@ class DesignPerson(var name: String, var age: Int, var occupation: String)
 class Person2(val name: String, var age: Int, var occupation: String){
     init {
         age = age * 2;
+
+        //Require is essentially a try expression that throws an illegalArgumentException if it fails
+        require(age > 0)
     }
 
     //Note that a class can also have more than one init block and are executed from top to bottom
@@ -102,6 +112,30 @@ class Person3(val name: String, val age: Int, val occupation: String) {
         this.classYear = classYear
     }
 
+}
+
+
+/**What about overloading/overriding methods/functions inside of the class?
+ * Kotlin provides "Open" in order to do so however it is generally used for inheritance
+ */
+open class Person4(val name: String, var age: Int, var occupation: String){
+
+    //Open is necessary to allow it to be overriden
+    open fun personID(): Unit{
+        println("Name: $name\n Age: $age\n Occupation: $occupation")
+    }
+}
+
+/**
+ * Inheritance in Kotlin, notice how Person4 is declared "open". This is to allow inheritance since by default,
+ * classes are final/read-only/immutable in Kotlin
+ */
+class Student (name: String, age: Int, occupation: String, val id: Int): Person4(name, age, occupation){
+
+    //Override keyword is necessary to override a method
+    override fun personID(): Unit{
+        println("Name: $name\n Age: $age\n Occupation: $occupation\n Student ID: $id\n")
+    }
 }
 
 /**
