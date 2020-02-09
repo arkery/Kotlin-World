@@ -26,7 +26,7 @@ fun main(){
     }
 
     /**
-     * You can also force null
+     * You can also force null But IT WILL SHOW A NULLPOINTEREXCEPTION on the example below
      */
 
     val whyIsThisNull = nullReturn()

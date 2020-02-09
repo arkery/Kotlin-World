@@ -3,7 +3,7 @@
 fun main(){
     var testingHello = "Hello"
 
-    //Is statement is used to check an object type
+    //Is statement is used to check an object type, similar to java's instanceof
     if(testingHello is String){
         println("\n\nIt's a String")
     }
