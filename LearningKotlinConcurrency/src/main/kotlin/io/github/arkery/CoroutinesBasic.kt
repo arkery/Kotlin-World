@@ -2,6 +2,7 @@ package io.github.arkery
 import kotlinx.coroutines.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import kotlin.concurrent.thread
 
 /**
  * Basic intro to coroutines, will cover async later
@@ -30,7 +31,6 @@ fun main() {
         println("In GlobalScope.launch: The sum of 2 and 3 is ${coroutineAddition(2, 3)} Thread: ${Thread.currentThread()}")
         localCoroutine()
     }
-
     println("Going to RunBlocking ${Thread.currentThread()}")
 
     /**
@@ -53,6 +53,9 @@ fun main() {
 /*
 Suspend functions are only callable from a coroutine or another suspend function.
 Instead of fully blocking the thread, it only suspends.
+
+HOWEVER: Adding a "suspend" in front of the function does not automagically suspend it when the
+function is called, only inside of a coroutine.
  */
 suspend fun coroutineAddition(x: Int, y: Int): Int = x + y
 
