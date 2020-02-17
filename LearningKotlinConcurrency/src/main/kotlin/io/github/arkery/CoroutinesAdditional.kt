@@ -1,6 +1,7 @@
 package io.github.arkery
 
 import kotlinx.coroutines.*
+import java.util.concurrent.Executors
 
 /**
  * Note: There is a difference between async and multithreaded programming
@@ -41,7 +42,7 @@ fun main(){
         coroutine1()
     }
 
-
+    val localCustomDispatcher = Executors.newFixedThreadPool(5).asCoroutineDispatcher()
 
     Thread.sleep(500)
 }
