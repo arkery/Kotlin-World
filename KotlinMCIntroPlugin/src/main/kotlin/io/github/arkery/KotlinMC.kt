@@ -11,6 +11,7 @@ import java.io.File
 import java.io.IOException
 import java.sql.Connection
 import java.sql.DriverManager
+import java.sql.SQLException
 
 class KotlinMC: JavaPlugin(), Listener, CommandExecutor{
 
@@ -20,30 +21,13 @@ class KotlinMC: JavaPlugin(), Listener, CommandExecutor{
 
     override fun onEnable() {
         println("Starting KotlinMC Plugin")
-
-        try{
-
-            if(!dbLocation.exists()){
-                println("Attempting to create database")
-                this.dataFolder.mkdir()
-                this.dbLocation.createNewFile()
-            }
-
-            Class.forName("org.sqlite.JDBC")
-            this.connection = DriverManager.getConnection("jdbc:sqlite:${this.dbLocation}")
-            println("Created database at: ${dbLocation.absolutePath}")
-        }catch (f: ClassNotFoundException){
-            println("Missing JDBC Driver")
-        }catch (g: IOException){
-            println("Unable to create Folder")
-        }
-
+        this.dbCreation()
+        this.dbTableCreation()
         Bukkit.getPluginManager().registerEvents(this, this)
     }
 
     override fun onDisable() {
         println("Closing the Plugin")
-        this.connection?.close()
     }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
@@ -60,5 +44,43 @@ class KotlinMC: JavaPlugin(), Listener, CommandExecutor{
         }
 
         return false
+    }
+
+    private fun dbCreation(){
+        try{
+
+            if(!dbLocation.exists()){
+                println("Attempting to create database")
+                this.dataFolder.mkdir()
+                this.dbLocation.createNewFile()
+            }
+
+            Class.forName("org.sqlite.JDBC")
+            this.connection = DriverManager.getConnection("jdbc:sqlite:${this.dbLocation}")
+            println("Created database at: ${dbLocation.absolutePath}")
+        }catch (f: ClassNotFoundException){
+            println("Missing JDBC Driver")
+        }catch (g: IOException){
+            println("Unable to create Folder")
+        }
+    }
+
+    private fun dbTableCreation(){
+        val dbQuery = this.connection?.createStatement()
+        try{
+            val sqlTable = """
+            CREATE TABLE IF NOT EXISTS PLAYERS(
+            uuid varchar(40) NOT NULL,
+            name varchar(16) NOT NULL,
+            PRIMARY KEY ('uuid')
+            )"""
+
+            dbQuery?.executeUpdate(sqlTable)
+            dbQuery?.close()
+            this.connection?.close()
+            println("Created DB Table")
+        }catch (e: SQLException){
+            e.printStackTrace()
+        }
     }
 }
