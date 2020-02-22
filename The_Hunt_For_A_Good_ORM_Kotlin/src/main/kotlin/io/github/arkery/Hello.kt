@@ -4,6 +4,7 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.io.File
 import java.sql.Connection
+import java.sql.SQLException
 
 object Users : Table() {
     val id = varchar("id", 10) // Column<String>
@@ -29,10 +30,15 @@ fun main() {
     dbCreate()
     transaction(Connection.TRANSACTION_SERIALIZABLE, 10) {
         SchemaUtils.createMissingTablesAndColumns(Users)
-
-        Users.insert {
-            it[id] = "yolo"
-            it[name] = "yolo"
+        try{
+            Users.insert {
+                it[id] = "arkery"
+                it[name] = "arkery"
+            }
+        }catch (e: SQLException){
+            Users.update({Users.id eq "arkery"}) {
+                it[id] = "arkery"
+                it[name] = "arkery" }
         }
 
         for(user in Users.selectAll()){
