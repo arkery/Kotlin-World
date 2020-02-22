@@ -1,0 +1,9 @@
+name: KotlinMCIntro
+version: 1.0
+author: arkery
+main: io.github.arkery.KotlinMCIntro
+depend:
+  [KotlinPlugin]
+commands:
+  Test:
+    description: Test command

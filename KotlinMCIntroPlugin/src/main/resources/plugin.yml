@@ -1,7 +1,0 @@
-name: KotlinMCIntro
-version: 1.0
-author: arkery
-main: io.github.arkery.KotlinMC
-commands:
-  Test:
-    description: Test command
